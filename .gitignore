@@ -1,0 +1,37 @@
+# Python/cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments and editor files
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+
+# Prepared CT data and local raw/test arrays
+npy_img_3mm_B30/
+test_img/
+*.npy
+
+# Training outputs and checkpoints
+runs/
+save/
+model_pretrained/
+**/runs/
+**/save/
+**/model_pretrained/
+*.ckpt
+*.pt
+*.pth
+*.tmp
+
+# Generated logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
