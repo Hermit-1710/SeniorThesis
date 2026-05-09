@@ -70,3 +70,30 @@ Decision rule:
 - Interpretation:
   - 18000 iter is close to 16500, but 16500 has the better PSNR and SSIM.
   - Continue to `21500 iter` for one more check because CTRestormer is now very close to CTformer.
+
+### 21500 Iter
+
+- Loss:
+  - Last 500 mean: `0.0068196`
+  - Last 200 mean: `0.0065617`
+  - Last 100 mean: `0.0067042`
+- Test metrics:
+  - Original low-dose: PSNR `29.2489`, SSIM `0.8759`, RMSE `14.2416`
+  - CTRestormer: PSNR `32.6738`, SSIM `0.9096`, RMSE `9.4842`
+- Comparison:
+  - Beats CTformer baseline: `32.3852 / 0.9026 / 9.8366`
+  - Slightly beats RED-CNN baseline: `32.6656 / 0.9067 / 9.4867`
+- Interpretation:
+  - This is the first CTRestormer checkpoint that surpasses both reproduced CTformer and RED-CNN on the local 3mm split.
+  - Treat `ctrestormer_21500iter.ckpt` as the current best checkpoint.
+  - Do not rely on blind continuation alone from here; next steps should focus on confirmation, qualitative figures, and possibly a controlled second run.
+
+### 22000 Iter
+
+- Loss:
+  - Last 500 mean: `0.0068964`
+  - Last 200 mean: `0.0068633`
+  - Last 100 mean: `0.0067520`
+- Status:
+  - Checkpoint saved, but not yet tested.
+  - Training was stopped after `22000 iter` to evaluate the successful `21500 iter` checkpoint.

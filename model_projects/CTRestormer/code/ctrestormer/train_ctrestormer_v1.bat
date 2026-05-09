@@ -27,4 +27,4 @@ cd /d E:\a_ST\CTformer\CTformer-main\model_projects\CTRestormer\code
   --restormer_heads 1,2,4,4 ^
   --grad_accum_steps 2 ^
   --use_amp true ^
-  --resume_iters 18000
+  --resume_iters 22000
