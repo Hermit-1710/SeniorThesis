@@ -1,0 +1,11 @@
+\centerline{\xiaoyi\bfseries Abstract}
+\vspace{4em}
+
+Low-dose computed tomography (LDCT) reduces radiation exposure but introduces stronger quantum noise and streak-like artifacts, which may degrade anatomical boundaries and low-contrast structures. This thesis studies deep learning based LDCT denoising under a paired image restoration setting. Using the AAPM-Mayo 3mm B30 dataset, a complete experimental pipeline is built from paired slice preparation and patient-level splitting to training, tiled inference, quantitative evaluation, and residual analysis. RED-CNN is used as a convolutional baseline, CTformer is used as a Transformer-based CT denoising baseline, and a Restormer-style model named CTRestormer is adapted for LDCT restoration under local GPU memory constraints.
+
+On the held-out L506 patient, the low-dose input obtains 29.2489 dB PSNR, 0.8759 SSIM, and 14.2416 RMSE. The best CTRestormer checkpoint at 21500 iterations improves the result to 32.6738 dB PSNR, 0.9096 SSIM, and 9.4842 RMSE, reaching performance comparable to RED-CNN and better than the reproduced CTformer baseline in this experiment. Beyond PSNR, SSIM, and RMSE, this thesis introduces residual noise analysis by comparing the estimated true residual, input minus target, with the residual removed by each model, input minus prediction. Residual correlation, removed residual strength, edge leakage, histograms, and frequency spectra are used to examine whether a model mainly removes noise-like texture or also suppresses structural information.
+
+The main contribution of this thesis is therefore not only a denoising benchmark, but a practical and interpretable LDCT restoration workflow. The results show that CTRestormer is effective for LDCT denoising, while residual maps provide additional evidence for understanding denoising behavior and possible over-smoothing risk.
+
+\vspace{1em}
+\noindent\textbf{Keywords:} Low-dose CT; image denoising; Transformer; CTRestormer; residual noise analysis; medical image restoration

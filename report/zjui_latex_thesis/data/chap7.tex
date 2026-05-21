@@ -1,0 +1,15 @@
+\chapter{Conclusion and Future Work}
+
+\section{Conclusion}
+
+This thesis studied Transformer-based LDCT image denoising using a paired supervised restoration setting. A complete experimental pipeline was built using AAPM-Mayo 3mm B30 paired slices, with patient L506 held out for testing. RED-CNN was used as a CNN baseline, CTformer was used as a Transformer-based CT denoising baseline, and CTRestormer was adapted from Restormer-style image restoration for LDCT denoising.
+
+The quantitative results show that all learned models improve the raw low-dose input. After continued training, the updated CTformer 100000 checkpoint reaches 32.6688 dB PSNR, 0.9067 SSIM, and 9.5197 RMSE, slightly exceeding RED-CNN in PSNR and matching it in SSIM while remaining slightly worse in RMSE. The best CTRestormer checkpoint, at 21500 iterations, achieves 32.6738 dB PSNR, 0.9096 SSIM, and 9.4842 RMSE on the held-out L506 patient. This is the best overall result among the selected checkpoints in this experiment. The checkpoint comparisons also show that both CTformer continuation and CTRestormer training progression improve performance relative to earlier checkpoints.
+
+Beyond standard metrics, this thesis introduced residual noise analysis. By comparing input minus target with input minus prediction, the thesis examined what signal each model removes. The residual analysis shows that CTformer is more conservative, while CTRestormer and RED-CNN remove stronger residuals. CTRestormer obtains strong image quality metrics, but its edge leakage is higher than CTformer on the representative slice, so structure preservation should remain part of future evaluation.
+
+Overall, the contribution of this thesis is it combines model comparison, memory-aware Transformer adaptation, tiled inference, quantitative evaluation, qualitative visualization, and residual behavior analysis.
+
+\section{Future Work}
+
+Several extensions can improve the thesis and the research project. First, residual metrics should be computed over all L506 test slices. Reporting mean and standard deviation would make the residual analysis more reliable. Second, region-of-interest evaluation should be added for soft tissue, bone boundaries, and low-contrast regions. Such analysis would better connect image restoration metrics to clinically relevant structures. Third, more studies can be performed for CTRestormer. Patch size, loss function, attention block configuration, and inference tile overlap may all affect denoising behavior. Fourth, a pseudo Noise2Noise or self-supervised denoising experiment can be explored. This would be useful in settings where paired LDCT and NDCT data are unavailable. 

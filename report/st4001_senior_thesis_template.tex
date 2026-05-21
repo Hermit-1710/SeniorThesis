@@ -1,0 +1,323 @@
+% ST4001 Senior Thesis LaTeX template converted from Appendix VI
+% Compile with XeLaTeX or LuaLaTeX.
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[a4paper,left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{fontspec}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setmainfont{Times New Roman}
+\doublespacing
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+\newcommand{\ThesisTitle}{Thesis Title}
+\newcommand{\StudentName}{Your Name}
+\newcommand{\StudentID}{Your student ID}
+\newcommand{\SupervisorName}{Supervisor Name}
+\newcommand{\SupervisorTitle}{Academic Title}
+\newcommand{\ClassYear}{Class of 2026}
+\newcommand{\Major}{Your Major}
+\newcommand{\SubmissionDate}{Submission date}
+\newcommand{\ConfidentialMark}{}
+\renewcommand{\bibname}{References}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\ClassYear}
+\fancyhead[C]{\StudentName}
+\fancyhead[R]{\StudentID}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\titleformat{\chapter}[block]
+  {\normalfont\bfseries\fontsize{18}{22}\selectfont}
+  {Chapter \thechapter.}{0.75em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{14}{18}\selectfont}
+  {\thesection}{0.75em}{}
+\titleformat{\subsection}
+  {\normalfont\bfseries\fontsize{12}{16}\selectfont}
+  {\thesubsection}{0.75em}{}
+
+\captionsetup[figure]{font={bf,small},labelfont=bf,justification=centering,singlelinecheck=true}
+\captionsetup[table]{font={bf,small},labelfont=bf,justification=centering,singlelinecheck=true}
+
+\newcommand{\fronttitle}[1]{%
+  \clearpage
+  \begin{center}
+    {\bfseries\fontsize{24}{28}\selectfont #1}
+  \end{center}
+  \vspace{1em}
+}
+
+\newcommand{\signatureline}[1]{%
+  \noindent #1\hspace{0.5em}\rule{0.32\textwidth}{0.4pt}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{flushright}
+\ConfidentialMark{}Confidential thesis $\square$
+\end{flushright}
+\vspace*{1.2cm}
+\begin{center}
+{\fontsize{18}{22}\selectfont Zhejiang University-University of Illinois Urbana-Champaign Institute\par}
+\vspace{1.4cm}
+{\bfseries\fontsize{24}{30}\selectfont Undergraduate Thesis\par}
+\vspace{0.3cm}
+{\bfseries\fontsize{20}{24}\selectfont (Design)\par}
+\vspace{2.2cm}
+{\bfseries\fontsize{20}{24}\selectfont \ThesisTitle\par}
+\vfill
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{>{\raggedleft\arraybackslash}p{0.28\textwidth} p{0.45\textwidth}}
+Student Name & \StudentName\\
+Student ID & \StudentID\\
+Supervisor & \SupervisorName\\
+Class of year & \ClassYear\\
+Major & \Major\\
+Submission date & \SubmissionDate\\
+\end{tabular}
+\end{center}
+\end{titlepage}
+
+\setcounter{page}{2}
+
+\fronttitle{Content Checklist}
+
+\begin{center}
+\small
+(Student should bind this form on the first page of the thesis after the cover page. The form should be filled out by the supervisor after the oral defense.)
+\end{center}
+\vspace{0.5em}
+
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{|p{0.18\textwidth}|X|p{0.18\textwidth}|X|}
+\hline
+Student Name & \StudentName & ZJU ID & \StudentID\\ \hline
+Major & \Major & Academic Supervisor Title & \SupervisorTitle\\ \hline
+Thesis title & \multicolumn{3}{p{0.69\textwidth}|}{\ThesisTitle}\\ \hline
+Evaluation & \multicolumn{3}{p{0.69\textwidth}|}{Good $\square$\quad Fair $\square$}\\ \hline
+\end{tabularx}
+
+\vspace{1em}
+\begin{longtable}{|c|p{0.68\textwidth}|c|}
+\hline
+ & Content Checklist Section & $\sqrt{}$ \\ \hline
+1 & Cover (Use the unified cover, blue recommended) & \\ \hline
+2 & Academic Integrity Commitment of Senior Thesis & \\ \hline
+3 & Acknowledgements & \\ \hline
+4 & Abstract & \\ \hline
+5 & Table of Contents & \\ \hline
+6 & Main Content (Page numbers start from the main text) & \\ \hline
+7 & Reference & \\ \hline
+8 & Appendix (if need) & \\ \hline
+9 & Author's Biography & \\ \hline
+10 & Task plan of senior thesis & \\ \hline
+11 & Assessment Form of senior thesis & \\ \hline
+12 & On-site Minutes Form of Oral Defense & \\ \hline
+\end{longtable}
+
+\vspace{2em}
+\signatureline{Signature of Supervisor:}
+\hfill
+\signatureline{Date:}
+
+\fronttitle{Academic Integrity Commitment of Senior Thesis}
+
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item I solemnly promise that the submitted thesis has been completed under the guidance of my supervisor in strict accordance with the relevant regulations of the university and the college.
+\item In my thesis, except for the parts specifically marked and acknowledged, it does not contain research results that have been published or written by others, nor does it contain materials used to obtain degrees or certificates from Zhejiang University or other educational institutions.
+\item Any contributions made by my colleagues to this research have been clearly stated and acknowledged in the thesis.
+\item I promise that there has been no fabrication of data in the process of completing the thesis.
+\item If there is any infringement of intellectual property rights in this thesis, I shall bear the corresponding legal responsibilities.
+\item I fully understand that Zhejiang University has the right to retain and submit copies and disks of this thesis (design) to relevant departments or agencies, and to allow the thesis (design) to be consulted and borrowed. I authorize Zhejiang University to include all or part of this thesis (design) in relevant databases for retrieval and dissemination, and to save and compile this thesis (design) by means of photocopying, reduction, or scanning.
+\end{enumerate}
+
+\vspace{3em}
+\signatureline{Author's Signature:}
+\hfill
+\signatureline{Supervisor's Signature:}
+
+\vspace{2em}
+\signatureline{Date:}
+\hfill
+\signatureline{Date:}
+
+\fronttitle{Acknowledgements}
+
+% Times New Roman, size 12, double linespace. References are cited by number in square brackets.
+Write your acknowledgements here. Replace this paragraph with your own text.
+
+\fronttitle{Abstract}
+
+% No more than 300 words.
+Write your abstract here. The abstract should be no more than 300 words and should briefly summarize the project background, aims, methods, results, and conclusions.
+
+\clearpage
+\begin{center}
+{\bfseries\fontsize{24}{28}\selectfont Content}
+\end{center}
+\renewcommand{\contentsname}{}
+\tableofcontents
+
+\clearpage
+\setcounter{page}{1}
+
+\chapter{Introduction}
+
+\section{Section Title}
+
+Main text should use Times New Roman, size 12, double line spacing, and fully justified paragraphs. References are cited by number in square brackets, for example \cite{engel1986}.
+
+\subsection{Sub-section Title}
+
+Write your subsection content here.
+
+\subsection{Sub-section Title}
+
+Write your subsection content here.
+
+\chapter{Title of Chapter 2}
+
+\section{Section Title}
+
+Write the main technical content of the thesis here. Add figures, equations, and tables as needed.
+
+\subsection{Sub-section Title}
+
+Figure captions should be bold Times New Roman size 12, single line spacing, and centered.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\rule{0pt}{4cm}\rule{0.75\textwidth}{0pt}}
+\caption{Example figure caption}
+\label{fig:example}
+\end{figure}
+
+\subsection{Sub-section Title}
+
+\begin{equation}
+\mathrm{EQI}=\sum_{j=1}^{n} W_j r_j
+\label{eq:eqi}
+\end{equation}
+
+\begin{equation}
+\mathrm{EHI}=L_1 \times \mathrm{ESI}+L_2 \times \mathrm{EQI}
+\label{eq:ehi}
+\end{equation}
+
+\begin{equation}
+\mathrm{EE}/\mathrm{EHI}=\beta_0+\beta_1\mathrm{PCG}+\beta_2\mathrm{RGP}+\cdots+\beta_iX_i+\cdots+\beta_{10}\mathrm{ICWUR}+\beta_{11}\mathrm{ECPG}+\beta_{12}\mathrm{WCPG}+\varepsilon_i
+\label{eq:regression}
+\end{equation}
+
+Table captions should be bold Times New Roman size 12, single line spacing, and centered.
+
+\begin{table}[htbp]
+\centering
+\caption{Example table caption}
+\label{tab:example}
+\begin{tabular}{lll}
+\toprule
+Column 1 & Column 2 & Column 3\\
+\midrule
+xxx & xxx & xxx\\
+xxx & xxx & xxx\\
+xxx & xxx & xxx\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter{Conclusion}
+
+Write your conclusion here. Summarize the completed work, main findings, limitations, and possible future work.
+
+\clearpage
+\addcontentsline{toc}{chapter}{References}
+\begin{thebibliography}{99}
+\singlespacing
+\bibitem{engel1986}
+ENGEL P A. \textit{Impact Wear of Materials}. 2nd ed. New York: Elsevier, 1986.
+
+\bibitem{hao2014}
+Hao, Z., AghaKouchak, A., Nakhjiri, N. \& Farahmand, A. Global Integrated Drought Monitoring and Prediction System (GIDMaPS) data sets. figshare. \url{http://dx.doi.org/10.6084/m9.figshare.853801} (2014).
+
+\bibitem{babichev2002}
+Babichev, S. A., Ries, J. \& Lvovsky, A. I. Quantum scissors: teleportation of single-mode optical states by means of a nonlocal single photon. Preprint at \url{http://arXiv.org/quant-ph/0208066} (2002).
+\end{thebibliography}
+\doublespacing
+
+\appendix
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+
+If applicable, attach publication acceptance letters, patent documents, or other supplementary materials here.
+
+\fronttitle{Author's Biography}
+\onehalfspacing
+
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item \textbf{Personal Information}
+
+Name: \StudentName
+
+Gender:
+
+Date of Birth:
+
+\item \textbf{Education}
+
+YYYY.MM--YYYY.MM \quad Institution, Degree
+
+\item \textbf{Awards}
+
+\item \textbf{Research Experience}
+
+\item \textbf{Publications and Patents}
+\end{enumerate}
+\doublespacing
+
+\clearpage
+\begin{center}
+{\bfseries Appendix VII}\\[0.5em]
+{\bfseries\fontsize{18}{22}\selectfont Academic Integrity Commitment of Senior Thesis}
+\end{center}
+
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item I solemnly promise that the submitted thesis has been completed under the guidance of my supervisor in strict accordance with the relevant regulations of the university and the college.
+\item In my thesis, except for the parts specifically marked and acknowledged, it does not contain research results that have been published or written by others, nor does it contain materials used to obtain degrees or certificates from Zhejiang University or other educational institutions.
+\item Any contributions made by my colleagues to this research have been clearly stated and acknowledged in the thesis.
+\item I promise that there has been no fabrication of data in the process of completing the thesis.
+\item If there is any infringement of intellectual property rights in this thesis, I shall bear the corresponding legal responsibilities.
+\item I fully understand that Zhejiang University has the right to retain and submit copies and disks of this thesis to relevant departments or agencies, and to allow the thesis to be consulted and borrowed. I authorize Zhejiang University to include all or part of this thesis in relevant databases for retrieval and dissemination, and to save and compile this thesis by means of photocopying, scanning or abridging.
+\end{enumerate}
+
+\vspace{3em}
+\signatureline{Author's Signature:}
+\hfill
+\signatureline{Supervisor's Signature:}
+
+\vspace{2em}
+\signatureline{Date:}
+\hfill
+\signatureline{Date:}
+
+\end{document}

@@ -1,0 +1,48 @@
+% Compile with XeLaTeX:
+% xelatex main.tex
+% xelatex main.tex
+
+\documentclass[filled]{zjuthesis}
+\emergencystretch=2em
+
+\begin{document}
+
+\zju{
+    title = {Image Denoising in Medical Imaging with Transformers},
+    name = {Yuxing Wu},
+    id = {3210110961},
+    supervisor = {Bo Zhao},
+    class of year = {2026},
+    major = {EE},
+    submission date = {May 22, 2026},
+    Academic title = {Associate Professor},
+}
+
+\maketitle
+
+\frontmatter
+
+\Checklist
+\Commitment
+
+{\doublespacing
+    \include{data/ack}
+    \include{data/abstract}}
+
+\tableofcontents
+
+\mainmatter
+
+\include{data/chap1}
+\include{data/chap2}
+\include{data/chap3}
+\include{data/chap4}
+\include{data/chap5}
+\include{data/chap6}
+\include{data/chap7}
+
+\include{data/ref}
+\include{data/appendix}
+\include{data/biography}
+
+\end{document}

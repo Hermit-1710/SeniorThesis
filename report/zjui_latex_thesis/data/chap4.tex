@@ -1,0 +1,93 @@
+\chapter{Experimental Setup}
+
+\section{Implementation Environment}
+
+The project is implemented as a local LDCT denoising workflow. The codebase prepares paired NumPy arrays, trains denoising models, saves checkpoints, performs inference on the held-out patient, and generates figures for thesis analysis. The experiments are designed around practical constraints. Transformer-based restoration models can exceed memory limits when applied directly to full CT slices, so patch training and tiled inference are used.
+
+All reported local experiments were run on the workstation summarized in Table \ref{tab:environment}. The hardware is a practical single-GPU student research environment rather than a large training server. This constraint affects the experimental design: full \(512 \times 512\) slice training is avoided for Transformer-based models, and patch-based training with tiled full-slice inference is used to keep GPU memory usage feasible.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Local implementation environment used for the reported experiments.}
+    \renewcommand{\arraystretch}{1.25}
+    \small
+    \begin{tabular*}{\textwidth}{>{\raggedright\arraybackslash}p{0.30\textwidth}|>{\raggedright\arraybackslash}p{0.62\textwidth}}
+        \hline
+        Item & Configuration \\
+        \hline
+        CPU & AMD Ryzen 7 5800H, 8 cores and 16 logical processors \\
+        \hline
+        Memory & Approximately 14.9 GB physical memory \\
+        \hline
+        GPU & NVIDIA GeForce RTX 3060 Laptop GPU\\
+        \hline
+        CUDA & CUDA 12.8 \\
+        \hline
+        Python and PyTorch & Python 3.8.20; PyTorch 2.4.1 with CUDA 12.1 build \\
+        \hline
+    \end{tabular*}
+    \label{tab:environment}
+\end{table}
+
+\section{Training and Inference Configuration}
+
+Table \ref{tab:model_config} summarizes the model and inference configuration used in the current thesis. The purpose of this table is to make the experimental protocol easier to audit. It separates model identity, training strategy, and inference strategy from the results reported later.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Model and inference configuration summary.}
+    \renewcommand{\arraystretch}{1.35}
+    \begin{tabular*}{\textwidth}{>{\raggedright\arraybackslash}p{0.22\textwidth}|>{\raggedright\arraybackslash}p{0.38\textwidth}|>{\raggedright\arraybackslash}p{0.30\textwidth}}
+        \hline
+        Component & Configuration & Reason \\
+        \hline
+        RED-CNN & CNN denoising baseline & Representative convolutional LDCT denoiser \\
+        \hline
+        CTformer & Transformer LDCT baseline checkpoint & Comparison with a CT-specific Transformer model \\
+        \hline
+        CTRestormer & Restormer-style encoder-decoder with residual output & Main adapted restoration model for LDCT \\
+        \hline
+        Training & Patch-based training with memory-aware settings & Enables training under local GPU limitations \\
+        \hline
+        Inference & Tiled full-slice inference & Avoids out-of-memory errors for \(512 \times 512\) slices \\
+        \hline
+    \end{tabular*}
+    \label{tab:model_config}
+\end{table}
+
+\section{Model Size}
+
+Table \ref{tab:model_size} reports the parameter sizes of the main models used in this thesis. The values were computed by instantiating the exact model definitions used in the experiments and counting trainable parameters. CTformer contains a fixed sinusoidal positional embedding, so its total parameter count is larger than its trainable parameter count. CTRestormer uses the actual lightweight configuration trained in this thesis, not the larger default class configuration.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Parameter sizes of the evaluated denoising models.}
+    \renewcommand{\arraystretch}{1.25}
+    \small
+    \begin{tabular}{lccc}
+        \hline
+        Model & Main configuration & Total params & Trainable params \\
+        \hline
+        RED-CNN & out\_ch=96 & 1,848,865 & 1,848,865 \\
+        \hline
+        CTformer & embed=64, depth=1, heads=8 & 1,652,493 & 1,447,477 \\
+        \hline
+        CTRestormer & dim=24, blocks=(1,2,2,3) & 2,985,981 & 2,985,981 \\
+        \hline
+    \end{tabular}
+    \label{tab:model_size}
+\end{table}
+
+The proposed CTRestormer is larger than RED-CNN and CTformer in the current implementation, but it remains small enough for local patch-based training. The extra capacity is used in the multi-scale encoder-decoder and Transformer restoration blocks. This is a deliberate trade-off: CTRestormer is not the lightest model, but it provides stronger representation capacity and better restoration bias for LDCT denoising.
+
+\section{Evaluation Metrics}
+
+Three standard image quality metrics are used for the main comparison. PSNR measures the peak signal-to-noise ratio and is reported in decibels. Higher PSNR indicates lower pixel-level error relative to the target. SSIM measures structural similarity and is also higher-is-better \cite{ssim}. RMSE is the root mean square error between the prediction and target; lower RMSE indicates better fidelity.
+
+These metrics are computed on the held-out L506 patient. The low-dose input is included in the metric table to show the improvement produced by learned denoising. For CTRestormer, several checkpoints are included to show how performance changes during training. In addition to the standard metrics, residual correlation, removed residual standard deviation, removed residual MAE, prediction error MAE, and edge leakage are computed for the representative residual analysis slice.
+
+\section{Experimental Questions}
+
+The experiments are designed to answer four questions. First, do learned denoising models improve LDCT image quality compared with the raw low-dose input? Second, how does CTRestormer compare with RED-CNN and CTformer on the held-out patient? Third, does the CTRestormer checkpoint study show consistent training improvement? Fourth, what residual signal does each model remove from the low-dose input?
+
+The fourth question is important because the best metric value is not the only concern in medical image denoising. If a model removes residual patterns that contain clear anatomical edges, the denoised image may look clean but lose information. Therefore, residual analysis is treated as a separate discussion chapter rather than a minor visual appendix.

@@ -1,0 +1,31 @@
+\chapter{Literature Review}
+
+\section{Low-Dose CT Denoising}
+
+The motivation for LDCT denoising comes from the tension between radiation safety and image quality. Lower radiation dose reduces patient exposure, but it also increases the uncertainty of the measured signal. In reconstructed CT images, this uncertainty appears as noise, streak artifacts, and local texture distortion. LDCT denoising methods can be broadly grouped into projection-domain methods, reconstruction-domain methods, and image-domain post-processing methods. This thesis focuses on image-domain denoising, where the input is a reconstructed LDCT slice and the output is a restored image expected to resemble NDCT.
+
+Image-domain denoising is attractive because it can be applied after reconstruction and can be evaluated directly with paired LDCT and NDCT slices. The AAPM-Mayo Low Dose CT Grand Challenge dataset has become a common resource for this purpose because it provides paired full-dose and quarter-dose CT data \cite{aapm}. Under this paired setting, a supervised model can learn the mapping from noisy LDCT images to cleaner NDCT references. The limitation is that the NDCT target is still a clinical image rather than a mathematically noise-free ground truth. Therefore, the result should be interpreted as restoration toward the normal-dose reference, not as recovery of a perfect clean image.
+
+Evaluation in LDCT denoising often uses PSNR, SSIM, and RMSE. PSNR and RMSE measure pixel-level fidelity, while SSIM measures structural similarity \cite{ssim}. These metrics are useful for reproducible comparison, but they do not fully describe clinical usefulness. For example, a strongly smoothed image may have a lower pixel error but weaker fine structures. This limitation motivates the residual noise analysis used later in this thesis.
+
+\section{CNN-Based Image Restoration}
+
+CNNs have been highly influential in medical image restoration. Their local receptive fields and shared weights make them effective at learning spatial patterns such as edges, textures, and local noise statistics. RED-CNN is a representative LDCT denoising method that uses a residual encoder-decoder structure to restore CT images \cite{redcnn}. It remains a meaningful baseline because it was designed specifically for LDCT and has demonstrated strong performance on paired CT denoising tasks.
+
+CNN-based models have several advantages. They are relatively stable to train, computationally efficient compared with many attention-based models, and well matched to local image restoration. In CT denoising, local convolution can remove high-frequency noise while preserving many anatomical boundaries. U-Net style encoder-decoder structures further improve multi-scale feature extraction and have influenced many biomedical imaging models \cite{unet}.
+
+However, CNNs also have limitations. A standard convolution only aggregates information within a local neighborhood. Although deeper networks, dilated convolutions, skip connections, and multi-scale designs can enlarge the effective receptive field, long-range dependency modeling is still indirect. In LDCT images, noise and artifacts may interact with anatomical structures across larger regions, especially when streak artifacts are present. CNN models may also produce over-smoothed outputs if the loss function and architecture encourage average-looking predictions. For these reasons, Transformer-based restoration models are increasingly studied as alternatives or complements.
+
+\section{Transformer-Based Restoration}
+
+The Transformer was originally introduced for sequence modeling and uses attention to model relationships between tokens \cite{attention}. Vision Transformer later showed that attention-based architectures could be applied to images by representing an image as a sequence of patches \cite{vit}. For image restoration, the challenge is that restoration requires dense pixel-level output and often high-resolution input. Direct global self-attention can be expensive for large images, so efficient attention mechanisms and hierarchical designs are important.
+
+SwinIR applies shifted-window attention to image restoration and demonstrates that Transformer architectures can be competitive in tasks such as denoising and super-resolution \cite{swinir}. Restormer further designs an efficient Transformer for high-resolution image restoration, using restoration-oriented blocks and a hierarchical structure to reduce memory cost \cite{restormer}. These ideas are relevant to LDCT denoising because CT slices are high-resolution grayscale images and require preservation of fine anatomical structures.
+
+CTformer is a Transformer-based model designed for LDCT denoising \cite{ctformer}. It shows that attention-based methods can be adapted to CT-specific restoration. This thesis uses CTformer as a Transformer baseline and adapts a Restormer-style model as CTRestormer. The comparison is useful because CTformer represents a CT-specific Transformer design, while CTRestormer represents a general image restoration Transformer adapted to the LDCT setting.
+
+\section{Literature Gap and Thesis Position}
+
+The reviewed literature suggests three gaps that motivate this thesis. First, CNN-based methods are strong but may not explicitly model long-range dependencies. Second, Transformer-based restoration can improve contextual modeling, but high-resolution CT slices create practical memory challenges. Third, many denoising studies focus on PSNR, SSIM, and RMSE, while providing less analysis of what signal is removed from the noisy input.
+
+This thesis is positioned at the intersection of these gaps. It keeps RED-CNN as a strong CNN baseline, evaluates CTformer as a CT-specific Transformer baseline, and adapts a Restormer-style architecture to LDCT denoising. More importantly, it adds residual noise analysis to examine denoising behavior. By comparing \(x-y\) with \(x-\hat{y}\), the thesis studies whether the removed residual resembles estimated LDCT noise. This does not prove clinical safety, but it provides a useful interpretation beyond global metrics.

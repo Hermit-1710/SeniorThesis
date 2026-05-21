@@ -32,6 +32,16 @@ model_pretrained/
 # Generated logs
 *.log
 
+# LaTeX build artifacts and local document drafts
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.zip
+*.docx
+
 # OS files
 Thumbs.db
 .DS_Store
